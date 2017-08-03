@@ -3,18 +3,34 @@ session_start();
 require 'flight/Flight.php';
 require 'autoloader.php';
 
-Flight::render('header', array('heading' => 'Hello'), 'header');
-Flight::render('footer', array('tests' => 'World'), 'footer');
-
-// TESTS UNITAIRES
-// Ils servent à tester des parties de code, des objets spécifiques, ou des méthodes.
-// On peut automatiser ces tests pour ne pas devoir les refaire manuellement à chaque fois.
+Flight::render('header', array('heading' => 'loueMonAppart'), 'header');
+Flight::render('footer', array('footer' => 'loueMonAppart'), 'footer');
 
 Flight::route('/',  function(){
-    echo "Hello world!";
-    //Flight::render('traducteur', array(
-    //));
+    Flight::render('accueil', array(
+    ));
 });
+
+Flight::route('/accueil',  function(){
+    Flight::render('accueil', array(
+    ));
+});
+
+Flight::route('/login',  function(){
+    Flight::render('login', array(
+    ));
+});
+
+Flight::route('/register',  function(){
+    Flight::render('register', array(
+    ));
+});
+
+Flight::route('/registerService', function(){
+    include "service/registerService.php";
+    Flight::redirect('/accueil');
+});
+
 
 Flight::start();
 ?>

@@ -1,21 +1,14 @@
 <?= $header ?>
 
-<h2>Login</h2>
-<p>
-    Connectez-vous
-</p>
+<h2>Se connecter</h2>
+
 <form action="loginService" method="post">
-    <div class="form-group">
-        <label>Username</label>
-        <input class="form-control" type="text" name="username" value=""/>
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" type="password" name="password" value="" />
-    </div>
+    <label>Nom d'utilisateur</label>
+    <input type="text" name="username" /><br />
+    <label>Mot de passe</label>
+    <input type="password" name="password" /><br /><br />
 
-    <button class="btn btn-primary" type="submit">Login</button>
-
+    <input type="submit" value="Se connecter" />
 </form>
 
 <?= $footer ?>

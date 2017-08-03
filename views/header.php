@@ -8,3 +8,14 @@
 </head>
 <body>
 
+<nav>
+    <ul>
+        <li>Accueil</li>
+        <li>Annonces</li>
+        <li>Profile</li>
+        <li>Se connecter/S'inscrire/Se déconnecter</li>
+    </ul>
+</nav>
+
+<h1>LoueMonAppart</h1>
+
