@@ -16,15 +16,12 @@ if(isset($_POST["username"]) && isset($_POST["upassword"]) && isset($_POST["tele
         $user->setTelephone($telephone);
         $user->setEmail($email);
 
-        /***
-         * Alfonso: nope!! au bdd manager on ne doit pas lui passer des paramètres comme ça
-         * tu passera l'objet user au méthode en paramètres c'est tout.
-         * Allez continue on ne dirait pas mais t'es bien partie.
-         */
-        $bddmanager = new BddManager("", "", "", "");
+        $bddmanager = new BddManager();
         $bddmanager->register($user);
 
-        var_dump($user);
+        Flight::redirect('/accueil');
+
+        //var_dump($user);
     }
 }
 

@@ -35,9 +35,5 @@ class User {
             }
         }
     }
-
-    // public function save(BddManager $bddmanager){
-    //     $bddmanager->saveUser($this);
-    // }
 }
 ?>

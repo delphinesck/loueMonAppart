@@ -3,7 +3,7 @@
 class BddManager {
     public $connexion;
 
-    public function __CONSTRUCT($connexion){
+    public function __CONSTRUCT(){
         $this->connexion = Connexion::getConnexion();
     }
 
@@ -20,13 +20,55 @@ class BddManager {
         //return $pdo->lastInsertId();
     }
 
-    public function saveUser(User $user){
-        if(empty($user->getId()) == true){
-            $this->register($user);
+    // function login($username, $upassword){
+    //     $pdo = $connexion->prepare('SELECT * FROM user WHERE username=:username AND upassword=:upassword');
+    //     $pdo->execute(array(
+    //         'username'=>$username,
+    //         'upassword'=>$upassword
+    //     ));
+    //     $user = $pdo->fetchAll(PDO::FETCH_ASSOC);
+    //     return $user;
+    // }
+
+    function checkUserLogin($username, $upassword){
+        $object = $this->connexion->prepare('SELECT id, username, telephone, email FROM user WHERE username=:username AND upassword=:upassword');
+        $object->execute(array(
+            'username' => $username,
+            'upassword' => $upassword
+        ));
+        $passwordverify = $object->fetchAll(PDO::FETCH_ASSOC);
+        return $passwordverify;
+    }
+
+    function getUserById($id){
+        $pdo = $this->connexion->prepare('SELECT * FROM user WHERE id=:id');
+        $pdo->execute(array(
+            'id'=>$id
+        ));
+        $user = $pdo->fetchAll(PDO::FETCH_ASSOC);
+        return $user;
+    }
+
+    function getAnnonceById($id){
+        $pdo = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
+        $pdo->execute(array(
+            'id'=>$id
+        ));
+        $annonce = $pdo->fetchAll(PDO::FETCH_ASSOC);
+        return $annonce;
+    }
+
+    public function getAllAnnonces(){
+        $this->getConnexion();
+
+        $object = $this->connexion->prepare('SELECT * FROM annonces');
+        $object->execute(array());
+        $annonces = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($annonces as $index){
+            $tabAnnonces[]=$index;
         }
-        else{
-            //$this->update($user);
-        }
+        return $tabAnnonces;
     }
 }
 
