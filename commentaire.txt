@@ -1,0 +1,11 @@
+
+/*****
+* Alfonso: l'Objet c'est pas facile
+* On a décidé de changé de stratégie donc et d'éliminer les repositories.
+* Ça va quand même être un challenge d'avoir une structure object-entité plus BddManager
+*
+* Aussi une grosse difficulté sera de combiner le tout avec Flight mais c'est un mal nécessaire
+*
+* Accroche toi. après un certain temps tu pigeras les subtilités de tout ça
+* Je pense que tu peux bien performer.
+* Bon courage à toi et bonne continuation!!
