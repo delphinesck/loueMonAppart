@@ -22,6 +22,11 @@ Flight::route('/annonces', function(){
     ));
 });
 
+Flight::route('/annonce', function(){
+    Flight::render('annonce', array(
+    ));
+});
+
 Flight::route('/nouvelle_annonce', function(){
     Flight::render('newannonce', array(
     ));
@@ -49,6 +54,11 @@ Flight::route('/register', function(){
 
 Flight::route('/registerService', function(){
     include "service/registerService.php";
+});
+
+Flight::route('/newAnnonceService', function(){
+    include "service/newAnnonceService.php";
+    Flight::redirect('/annonces');
 });
 
 

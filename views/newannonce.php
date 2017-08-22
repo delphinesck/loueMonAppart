@@ -2,20 +2,25 @@
 
 <h2>Créer une nouvelle annonce</h2>
 
-<form action="newAnnonceService" type="post">
+<?php if(empty($_GET['incomplet']) == false): ?>
+    <span class="messageerreur">Veuillez remplir tous les champs.</span>
+<?php endif; ?>
+
+<form action="newAnnonceService" method="post">
     <label>Titre : </label>
     <input type="text" name="titre" /><br />
-    <label>Description : </label>
-    <input type="textarea" name="titre" /><br />
+    <label>Description : </label><br />
+    <textarea placeholder="Décrivez votre location ici..." name="description" rows="5" cols="60"></textarea><br />
     <label>Ville : </label>
     <input type="text" name="ville" /><br />
     <label>Tarif : </label>
     <input type="number" name="tarif" /> € /jour<br />
     <label>Type de propriété : </label>
-        <select>
+        <select name="propriete">
             <option value="maison">Maison</option>
             <option value="appartement">Appartement</option>
             <option value="chateau">Château</option>
+            <option value="chalet">Chalet</option>
         </select><br />
     <label>Superficie : </label>
     <input type="text" name="superficie" /> m<sup>2</sup><br />
