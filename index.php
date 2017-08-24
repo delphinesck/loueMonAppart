@@ -23,6 +23,11 @@ Flight::route('/annonce/@id', function($id){
     Flight::render('annonce', array("id_annonce" => $id));
 });
 
+Flight::route('/annonce', function(){
+    Flight::render('annonce', array(
+    ));
+});
+
 Flight::route('/nouvelle_annonce', function(){
     Flight::render('newannonce');
 });
