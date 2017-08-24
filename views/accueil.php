@@ -1,5 +1,9 @@
 <?php echo $header ?>
 
-<?php var_dump($_SESSION); ?>
+<?php 
+if (!empty($_SESSION)){
+    var_dump($_SESSION['user']);
+}
+?>
 
 <?php echo $footer ?>

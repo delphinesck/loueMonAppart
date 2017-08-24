@@ -13,12 +13,19 @@
 
 <nav>
     <ul>
-        <li><a href="accueil">Accueil</a></li>
-        <li><a href="annonces">Annonces</a></li>
-        <li><a href="profil">Profil</a></li>
-        <li><a href="login">Se connecter</a></li>
-        <li><a href="register">S'inscrire</a></li>
-        <li>Se déconnecter</li>
+        <li><a href="/WWW/TP_loueMonAppart/accueil">Accueil</a></li>
+        <li><a href="/WWW/TP_loueMonAppart/annonces">Annonces</a></li>
+        <?php 
+            if(!empty($_SESSION)){
+                echo "<li><a href='/WWW/TP_loueMonAppart/profil'>Profil</a></li>
+                <li>Se déconnecter</li>";
+            }
+
+            else{
+                echo "<li><a href='/WWW/TP_loueMonAppart/login'>Se connecter</a></li>
+                <li><a href='/WWW/TP_loueMonAppart/register'>S'inscrire</a></li>";
+            }
+        ?>
     </ul>
 </nav>
 

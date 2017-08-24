@@ -16,9 +16,7 @@ if(!empty($paramserror)){
 
 
 $bddmanager = new BddManager();
-$user = $bddmanager->checkUserLogin($username, $upassword);
-    // var_dump($user);
-    // die();
+$user = $bddmanager->login($username, $upassword);
 if(empty($user) == false){
     $_SESSION['user'] = $user;
 }
