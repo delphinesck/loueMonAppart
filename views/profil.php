@@ -17,7 +17,7 @@ echo "<h2>Profil</h2>
 
 "<br /><br />
 
-<a href='nouvelle_annonce'><button>Créer une annonce</button></a><br />
+
 
 <h2>Vos annonces</h2>";
 
@@ -35,11 +35,35 @@ $annonces = $bddmanager->getAnnoncesByUserId($_SESSION['user']['id']);
             <p>"
             . $annonce->getDescription() .
             "</p>
-            <b>Ville : </b>" . $annonce->getVille() . "/ <b>Tarif : </b>" . $annonce->getTarif() . "€ /jour
-            </div>";
+            <b>Ville : </b>" . $annonce->getVille() . "/ <b>Tarif : </b>" . $annonce->getTarif() . "€ /jour<br />
+            
+            <a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button>Modifier</button></a>
+            
+            <form action='supprAnnonceService' method='post'>
+                <input type='submit' value='Supprimer' />
+            </form></div>";
         }
     }
 }
+
+echo "<h2>Vos réservations</h2>";
+
+
+echo "<h2>Vos biens réservés</h2>";
+    if(empty($annonces)){
+        echo "Vous n'avez mis aucun bien en location.";
+    }
+
+    elseif($annonce->getStatut() == false){
+        echo "Aucun de vos biens n'a encore été reservé.";
+    }
+
+    else{
+        echo "Réservé";
+    }
+
 ?>
+<br />
+<a href='nouvelle_annonce'><button>Créer une annonce</button></a><br />
 
 <?php echo $footer ?>

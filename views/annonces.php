@@ -2,7 +2,15 @@
 
 <h2>Annonces</h2>
 
-<a href="nouvelle_annonce"><button>Créer une annonce</button></a>
+<?php
+if(empty($_SESSION['user'])){
+    echo "Vous devez être connecté pour pouvoir poster une annonce.";
+}
+
+else{
+    echo "<a href='nouvelle_annonce'><button>Créer une annonce</button></a>";
+}
+?>
 
 <?php
 $bddmanager = new BddManager();

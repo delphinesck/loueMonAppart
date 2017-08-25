@@ -1,7 +1,8 @@
 <?php
-session_start();
 require 'flight/Flight.php';
 require 'autoloader.php';
+
+session_start();
 
 Flight::render('header', array('heading' => 'loueMonAppart'), 'header');
 Flight::render('footer', array('footer' => 'loueMonAppart'), 'footer');
@@ -46,7 +47,7 @@ Flight::route('/loginService', function(){
 });
 
 Flight::route('/register', function(){
-    Flight::render('/register');
+    Flight::render('register');
 });
 
 Flight::route('/registerService', function(){
@@ -61,6 +62,38 @@ Flight::route('/newAnnonceService', function(){
 Flight::route('/newAvisService/@id', function($id){
     include "service/newAvisService.php";
     Flight::redirect('/annonce/'.$id);
+});
+
+Flight::route('/modifier_annonce/@id', function($id){
+    Flight::render('modifyannonce', array("id_annonce" => $id));
+});
+
+Flight::route('/modifyAnnonceService/@id', function($id_annonce){
+    include "service/modifyAnnonceService.php";
+    Flight::redirect('/annonce/'.$id_annonce);
+});
+
+Flight::route('/reservation_validee', function(){
+    Flight::render('reservationvalidee');
+});
+
+Flight::route('/reservationService/@id', function($id_annonce){
+    include "service/reservationService.php";
+    Flight::redirect('/reservation_validee');
+});
+
+// Flight::route('/reservationService/@id', function($id_annonce){
+//     include "service/reservationService.php";
+//     Flight::redirect('/annonce/'.$id_annonce);
+// });
+
+// Flight::route('/supprAnnonceService/@id', function($id){
+//     include "service/supprAnnonceService.php";
+//     Flight::redirect('/annonces');
+// });
+
+Flight::route('/deconnecterService', function(){
+    include "service/deconnecterService.php";
 });
 
 

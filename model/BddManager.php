@@ -34,8 +34,8 @@ class BddManager {
         $pdo->execute(array(
             'id'=>$id
         ));
-        $user = $pdo->fetchAll(PDO::FETCH_ASSOC);
-        return $user;
+        $user = $pdo->fetch(PDO::FETCH_ASSOC);
+        return new User($user);
     }
 
     function getAnnonceById($id){
@@ -44,7 +44,8 @@ class BddManager {
             'id'=>$id
         ));
         $annonce = $pdo->fetch(PDO::FETCH_ASSOC);
-        return $annonce;
+
+        return new Annonce($annonce);
     }
 
     public function getAllAnnonces(){
@@ -121,6 +122,37 @@ class BddManager {
             }
             return $tabAvis;
         }
+    }
+
+    public function modifyAnnonce(Annonce $annonce){
+        $prepared = $this->connexion->prepare("UPDATE annonces SET titre=:titre, description=:description, tarif=:tarif, dispo_debut=:dispo_debut, dispo_fin=:dispo_fin, photo1=:photo1, 
+        photo2=:photo2, photo3=:photo3 WHERE id=:id");
+        $prepared->execute(array(
+            'titre' => $annonce->getTitre(),
+            'description' => $annonce->getDescription(),
+            'tarif' => $annonce->getTarif(),
+            'dispo_debut' => $annonce->getDispo_debut(),
+            'dispo_fin' => $annonce->getDispo_fin(),
+            'photo1' => $annonce->getPhoto1(),
+            'photo2' => $annonce->getPhoto2(),
+            'photo3' => $annonce->getPhoto3(),
+            'id' => $annonce->getId()
+        ));
+    }
+
+    public function deleteAnnonce($id){
+        $prepared = $this->connexion->prepare("DELETE FROM annonces WHERE id=:id");
+        $prepared->execute(array(
+            'id' => $id
+        ));
+    }
+
+    public function reservation(Annonce $annonce){
+        $prepared = $this->connexion->prepare("UPDATE annonces SET statut=:statut WHERE id=:id");
+        $prepared->execute(array(
+            'statut' => $annonce->getStatut(),
+            'id' => $annonce->getId()
+        ));
     }
 }
 

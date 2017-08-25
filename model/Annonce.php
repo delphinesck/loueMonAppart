@@ -54,7 +54,7 @@ class Annonce {
 
     public function hydrate($donnees){
         foreach($donnees as $key => $value){
-            $key = preg_replace('#_#', "", $key);
+            //$key = preg_replace('#_#', "", $key);
             $method = "set".ucfirst($key);
 
             if(method_exists($this,$method)){

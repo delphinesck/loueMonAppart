@@ -18,7 +18,9 @@
         <?php 
             if(!empty($_SESSION)){
                 echo "<li><a href='/WWW/TP_loueMonAppart/profil'>Profil</a></li>
-                <li>Se déconnecter</li>";
+                <form action='deconnecterService' method='post'>
+                    <input type='submit' value='Se déconnecter' />
+                </form>";
             }
 
             else{
