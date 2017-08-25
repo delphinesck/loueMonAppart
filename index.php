@@ -37,6 +37,10 @@ Flight::route('/profil', function(){
     Flight::render('profil');
 });
 
+Flight::route('/messagerie', function(){
+    Flight::render('messagerie');
+});
+
 Flight::route('/login', function(){
     Flight::render('login');
 });
@@ -64,6 +68,16 @@ Flight::route('/newAvisService/@id', function($id){
     Flight::redirect('/annonce/'.$id);
 });
 
+Flight::route('/newFavoriService/@id', function($id_annonce){
+    include "service/newFavoriService.php";
+    Flight::redirect('/annonce/'.$id_annonce);
+});
+
+Flight::route('/supprFavoriService/@id', function($id_annonce){
+    include "service/supprFavoriService.php";
+    Flight::redirect('/annonce/'.$id_annonce);
+});
+
 Flight::route('/modifier_annonce/@id', function($id){
     Flight::render('modifyannonce', array("id_annonce" => $id));
 });
@@ -87,10 +101,10 @@ Flight::route('/reservationService/@id', function($id_annonce){
 //     Flight::redirect('/annonce/'.$id_annonce);
 // });
 
-// Flight::route('/supprAnnonceService/@id', function($id){
-//     include "service/supprAnnonceService.php";
-//     Flight::redirect('/annonces');
-// });
+Flight::route('/supprAnnonceService/@id', function($id_annonce){
+    include "service/supprAnnonceService.php";
+    Flight::redirect('/annonces');
+});
 
 Flight::route('/deconnecterService', function(){
     include "service/deconnecterService.php";

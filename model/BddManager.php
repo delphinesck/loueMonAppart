@@ -19,7 +19,7 @@ class BddManager {
         return $pdo->rowCount();
     }
 
-    function login($username, $upassword){
+    public function login($username, $upassword){
         $object = $this->connexion->prepare('SELECT id, username, telephone, email FROM user WHERE username=:username AND upassword=:upassword');
         $object->execute(array(
             'username' => $username,
@@ -29,7 +29,7 @@ class BddManager {
         return $verify;
     }
 
-    function getUserById($id){
+    public function getUserById($id){
         $pdo = $this->connexion->prepare('SELECT * FROM user WHERE id=:id');
         $pdo->execute(array(
             'id'=>$id
@@ -38,7 +38,7 @@ class BddManager {
         return new User($user);
     }
 
-    function getAnnonceById($id){
+    public function getAnnonceById($id){
         $pdo = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
         $pdo->execute(array(
             'id'=>$id
@@ -46,6 +46,20 @@ class BddManager {
         $annonce = $pdo->fetch(PDO::FETCH_ASSOC);
 
         return new Annonce($annonce);
+    }
+
+    public function getAnnoncesById($id){
+        $pdo = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
+        $pdo->execute(array(
+            'id'=>$id
+        ));
+        $annonce = $pdo->fetchAll(PDO::FETCH_ASSOC);
+
+        $tabAnnonces = [];
+        foreach($annonces as $data){
+            $tabAnnonces[] = new Annonce($data);
+        }
+        return $tabAnnonces;
     }
 
     public function getAllAnnonces(){
@@ -140,19 +154,92 @@ class BddManager {
         ));
     }
 
-    public function deleteAnnonce($id){
+    public function supprAnnonce(Annonce $annonce){
         $prepared = $this->connexion->prepare("DELETE FROM annonces WHERE id=:id");
         $prepared->execute(array(
-            'id' => $id
+            'id' => $annonce->getId()
         ));
     }
 
     public function reservation(Annonce $annonce){
-        $prepared = $this->connexion->prepare("UPDATE annonces SET statut=:statut WHERE id=:id");
+        $prepared = $this->connexion->prepare("UPDATE annonces SET statut=:statut, locataire_id=:locataire_id WHERE id=:id");
         $prepared->execute(array(
             'statut' => $annonce->getStatut(),
+            'locataire_id' => $annonce->getLocataire_id(),
             'id' => $annonce->getId()
         ));
+    }
+
+    public function getAnnoncesByLocataireId($locataire_id){
+        $object = $this->connexion->prepare('SELECT * FROM annonces WHERE locataire_id=:locataire_id');
+        $object->execute(array(
+            'locataire_id' => $locataire_id
+        ));
+        $annonces = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!empty($annonces)){
+            $tabAnnonces = [];
+            foreach($annonces as $data){
+                $tabAnnonces[] = new Annonce($data);
+            }
+            return $tabAnnonces;
+        }
+    }
+
+    public function ajoutFavori(Favori $favori){
+        $prepared = $this->connexion->prepare("INSERT INTO favoris SET user_id=:user_id, annonce_id=:annonce_id");
+        $prepared->execute(array(
+            'user_id' => $favori->getUser_id(),
+            'annonce_id' => $favori->getAnnonce_id()
+        ));
+    }
+
+    public function supprFavori(Favori $favori){
+        $prepared = $this->connexion->prepare("DELETE FROM favoris WHERE id=:id");
+        $prepared->execute(array(
+            'id' => $favori->getId()
+        ));
+    }
+
+    public function getFavoriById($id){
+        $pdo = $this->connexion->prepare('SELECT * FROM favoris WHERE id=:id');
+        $pdo->execute(array(
+            'id'=>$id
+        ));
+        $favori = $pdo->fetch(PDO::FETCH_ASSOC);
+
+        return new Favori($favori);
+    }
+
+    public function getFavorisByUserId($user_id){
+        $object = $this->connexion->prepare('SELECT * FROM favoris WHERE user_id=:user_id');
+        $object->execute(array(
+            'user_id' => $user_id
+        ));
+        $favoris = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        $tabFavoris = [];
+        if(!empty($favoris)){
+            foreach($favoris as $data){
+                $tabFavoris[] = new Favori($data);
+            }
+        }
+        return $tabFavoris;
+    }
+
+    public function getFavorisByAnnonceIdAndUserId($annonce_id, $user_id){
+        $object = $this->connexion->prepare('SELECT * FROM favoris WHERE annonce_id=:annonce_id AND user_id=:user_id');
+        $object->execute(array(
+            'annonce_id' => $annonce_id,
+            'user_id' => $user_id
+        ));
+
+        $favoridata = $object->fetch(PDO::FETCH_ASSOC);
+        if(!empty($favoridata)){
+            return new Favori($favoridata);
+        }
+        else return false;
+
     }
 }
 

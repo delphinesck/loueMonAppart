@@ -16,6 +16,7 @@ class Annonce {
     private $photo3;
     private $datecreate;
     private $user_id;
+    private $locataire_id;
 
     public function __CONSTRUCT($donnees = array()) {
         $this->hydrate($donnees);
@@ -51,6 +52,8 @@ class Annonce {
     function getDatecreate() { return $this->datecreate; }
     function setUser_id($user_id) { $this->user_id = $user_id; }
     function getUser_id() { return $this->user_id; }
+    function setLocataire_id($locataire_id) { $this->locataire_id = $locataire_id; }
+    function getLocataire_id() { return $this->locataire_id; }
 
     public function hydrate($donnees){
         foreach($donnees as $key => $value){

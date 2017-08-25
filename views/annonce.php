@@ -12,6 +12,33 @@ $user = $bddmanager->getUserById($annonce->getUser_id());
 echo " par " . $user->getUsername();
 ?></h2>
 
+<?php
+$favoris = $bddmanager->getFavorisByUserId($_SESSION['user']['id']);
+$is_favoris = false;
+
+if($annonce->getUser_id() != $_SESSION['user']['id']){
+    foreach($favoris as $favori){
+        if($favori->getAnnonce_id() == $annonce->getId()){
+            $is_favoris = true;
+        }
+    }
+
+    if($is_favoris == true){
+        echo "<form action='/WWW/TP_loueMonAppart/supprFavoriService/" . $id_annonce . "' method='post'>
+        <input type='hidden' value='" . $annonce->getId() . "' name='annonce_id'>
+        <input type='submit' value='suppr ★' />
+        </form>";
+    }
+
+    else{
+        echo "<form action='/WWW/TP_loueMonAppart/newFavoriService/" . $id_annonce . "' method='post'>
+        <input type='hidden' value='" . $annonce->getId() . "' name='annonce_id'>
+        <input type='submit' value='ajout ☆' />
+        </form>";
+    }
+}
+?>
+
 <h3>
 <b>Titre : </b><?= $annonce->getTitre(); ?> 
 </h3>
@@ -53,7 +80,10 @@ if(empty($_SESSION['user'])){
 }
 
 elseif($_SESSION['user']['id'] == $user->getId()){
-    echo "<a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button>Modifier</button></a>";
+    echo "<a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button>Modifier</button></a>
+    <form action='/WWW/TP_loueMonAppart/supprAnnonceService/" . $annonce->getId() . "' method='post'>
+        <input type='submit' value='Supprimer' />
+    </form>";
 }
 
 elseif(!empty($_SESSION['user']) && $_SESSION['user']['id'] != $user->getId()){
@@ -76,6 +106,14 @@ elseif(!empty($_SESSION['user']) && $_SESSION['user']['id'] != $user->getId()){
 <?php 
 if(empty($_SESSION)){
     echo "Vous devez être connecté pour donner votre avis.";
+}
+
+elseif($_SESSION['user']['id'] == $annonce->getUser_id()){
+    echo "Vous ne pouvez pas donner d'avis sur votre propre location.";
+}
+
+elseif($_SESSION['user']['id'] != $annonce->getLocataire_id()){
+    echo "Vous ne pouvez pas donner d'avis sur une location que vous n'avez pas louée.";
 }
 
 else{

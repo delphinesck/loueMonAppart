@@ -20,7 +20,6 @@ echo "<h2>Profil</h2>
 
 
 <h2>Vos annonces</h2>";
-
 $bddmanager = new BddManager();
 $annonces = $bddmanager->getAnnoncesByUserId($_SESSION['user']['id']);
 
@@ -35,35 +34,82 @@ $annonces = $bddmanager->getAnnoncesByUserId($_SESSION['user']['id']);
             <p>"
             . $annonce->getDescription() .
             "</p>
-            <b>Ville : </b>" . $annonce->getVille() . "/ <b>Tarif : </b>" . $annonce->getTarif() . "€ /jour<br />
+            <b>Ville : </b>" . $annonce->getVille() . " / <b>Tarif : </b>" . $annonce->getTarif() . "€ /jour<br />
             
             <a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button>Modifier</button></a>
             
-            <form action='supprAnnonceService' method='post'>
+            <form action='/WWW/TP_loueMonAppart/supprAnnonceService/" . $annonce->getId() . "' method='post'>
                 <input type='submit' value='Supprimer' />
             </form></div>";
         }
     }
 }
 
-echo "<h2>Vos réservations</h2>";
+echo "<br /><a href='nouvelle_annonce'><button>Créer une annonce</button></a><br /><br />
 
 
-echo "<h2>Vos biens réservés</h2>";
+
+<h2>Vos favoris</h2>";
+$bddmanager = new BddManager();
+$favoris = $bddmanager->getFavorisByUserId($_SESSION['user']['id']);
+
+if(empty($favoris)){
+    echo "Vous n'avez aucun favoris.";
+}
+
+else{
+    foreach($favoris as $favori){
+        $annonceId = $favori->getAnnonce_id();
+        $annonceFav = $bddmanager->getAnnonceById($annonceId);
+
+        echo "<div class='listeannonce_box'>
+        <h4><a href='annonce/" . $annonceFav->getId() . "'>" . $annonceFav->getTitre() . "</a></h4>
+        <p>"
+        . $annonceFav->getDescription() .
+        "</p>
+        <b>Ville : </b>" . $annonceFav->getVille() . " / <b>Tarif : </b>" . $annonceFav->getTarif() . "€ /jour<br />
+            
+        <form action='/WWW/TP_loueMonAppart/supprFavoriService/" . $annonceFav->getId() . "' method='post'>
+            <input type='submit' value='Supprimer des favoris' />
+        </form></div>";
+    }
+}
+
+
+
+echo "<br /><h2>Vos réservations</h2>";
+$annoncesreservees = $bddmanager->getAnnoncesByLocataireId($_SESSION['user']['id']);
+
+    if(empty($annoncesreservees)){
+        echo "Vous n'avez réservé aucune location.";
+    }
+
+    else{
+        foreach($annoncesreservees as $annoncereservee){
+            echo "Vous avez réservé la location \"" . $annoncereservee->getTitre() . "\" du " . $annoncereservee->getDispo_debut() . " au " . $annoncereservee->getDispo_fin() . ".<br />";
+        }
+    }
+
+
+
+echo "<br /><h2>Vos locations réservées</h2>";
+
     if(empty($annonces)){
         echo "Vous n'avez mis aucun bien en location.";
     }
 
     elseif($annonce->getStatut() == false){
-        echo "Aucun de vos biens n'a encore été reservé.";
+        echo "Aucun de vos biens n'a encore été réservé.";
     }
 
-    else{
-        echo "Réservé";
+    elseif($annonce->getStatut() == true){
+        foreach($annonces as $annonce){
+            $locataire = $bddmanager->getUserById($annonce->getLocataire_Id());
+            echo "Votre location \"" . $annonce->getTitre() . "\" a été réservée par " . $locataire->getUsername() . ".<br />";
+        }
     }
 
 ?>
 <br />
-<a href='nouvelle_annonce'><button>Créer une annonce</button></a><br />
 
 <?php echo $footer ?>

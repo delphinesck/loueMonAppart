@@ -18,7 +18,8 @@
         <?php 
             if(!empty($_SESSION)){
                 echo "<li><a href='/WWW/TP_loueMonAppart/profil'>Profil</a></li>
-                <form action='deconnecterService' method='post'>
+                <li><a href='/WWW/TP_loueMonAppart/messagerie'>Messages privés</a></li>
+                <form action='/WWW/TP_loueMonAppart/deconnecterService' method='post'>
                     <input type='submit' value='Se déconnecter' />
                 </form>";
             }
