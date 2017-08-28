@@ -12,7 +12,7 @@ if(isset($_POST["note"]) && isset($_POST["commentaire"])){
 
     else {
         $user_id = $_SESSION['user']['id'];
-
+        
         $note = $_POST["note"];
         $commentaire = $_POST["commentaire"];
         $annonce_id = $_POST["annonce_id"];

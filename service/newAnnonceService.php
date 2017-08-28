@@ -1,10 +1,8 @@
 <?php
 $paramserror = "";
 
-if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["ville"]) && isset($_POST["tarif"]) && isset($_POST["propriete"]) && isset($_POST["superficie"]) 
-&& isset($_POST["dispo_debut"]) && isset($_POST["dispo_fin"]) && isset($_POST["photo1"])){
-    if(strlen($_POST["titre"]) == 0 || strlen($_POST["description"]) == 0 || strlen($_POST["ville"]) == 0 || strlen($_POST["tarif"]) == 0 || strlen($_POST["propriete"]) == 0
-     || strlen($_POST["superficie"]) == 0 || strlen($_POST["dispo_debut"]) == 0 || strlen($_POST["dispo_fin"]) == 0 || strlen($_POST["photo1"]) == 0){
+if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["ville"]) && isset($_POST["tarif"]) && isset($_POST["propriete"]) && isset($_POST["superficie"]) && isset($_POST["dispo_debut"]) && isset($_POST["dispo_fin"]) && isset($_POST["photo1"])){
+    if(strlen($_POST["titre"]) == 0 || strlen($_POST["description"]) == 0 || strlen($_POST["ville"]) == 0 || strlen($_POST["tarif"]) == 0 || strlen($_POST["propriete"]) == 0 || strlen($_POST["superficie"]) == 0 || strlen($_POST["dispo_debut"]) == 0 || strlen($_POST["dispo_fin"]) == 0 || strlen($_POST["photo1"]) == 0){
         $paramserror .= "&incomplet=1";
 
         if(!empty($paramserror)){
@@ -14,7 +12,7 @@ if(isset($_POST["titre"]) && isset($_POST["description"]) && isset($_POST["ville
 
     else {
         $user_id = $_SESSION['user']['id'];
-
+        
         $titre = $_POST["titre"];
         $description = $_POST["description"];
         $ville = $_POST["ville"];

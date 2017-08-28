@@ -38,6 +38,48 @@ class BddManager {
         return new User($user);
     }
 
+    public function postAnnonce(Annonce $annonce){
+        $query = "INSERT INTO annonces SET titre=:titre, description=:description, ville=:ville, tarif=:tarif, propriete=:propriete, superficie=:superficie, dispo_debut=:dispo_debut, dispo_fin=:dispo_fin, photo1=:photo1, photo2=:photo2, photo3=:photo3, datecreate=NOW(), user_id=:user_id";
+        $pdo = $this->connexion->prepare($query);
+        $pdo->execute(array(
+            'titre' => $annonce->getTitre(),
+            'description' => $annonce->getDescription(),
+            'ville' => $annonce->getVille(),
+            'tarif' => $annonce->getTarif(),
+            'propriete' => $annonce->getPropriete(),
+            'superficie' => $annonce->getSuperficie(),
+            'dispo_debut' => $annonce->getDispo_debut(),
+            'dispo_fin' => $annonce->getDispo_fin(),
+            'photo1' => $annonce->getPhoto1(),
+            'photo2' => $annonce->getPhoto2(),
+            'photo3' => $annonce->getPhoto3(),
+            'user_id' => $annonce->getUser_id()
+        ));
+        return $pdo->rowCount();
+    }
+
+    public function modifyAnnonce(Annonce $annonce){
+        $prepared = $this->connexion->prepare("UPDATE annonces SET titre=:titre, description=:description, tarif=:tarif, dispo_debut=:dispo_debut, dispo_fin=:dispo_fin, photo1=:photo1, photo2=:photo2, photo3=:photo3 WHERE id=:id");
+        $prepared->execute(array(
+            'titre' => $annonce->getTitre(),
+            'description' => $annonce->getDescription(),
+            'tarif' => $annonce->getTarif(),
+            'dispo_debut' => $annonce->getDispo_debut(),
+            'dispo_fin' => $annonce->getDispo_fin(),
+            'photo1' => $annonce->getPhoto1(),
+            'photo2' => $annonce->getPhoto2(),
+            'photo3' => $annonce->getPhoto3(),
+            'id' => $annonce->getId()
+        ));
+    }
+
+    public function supprAnnonce(Annonce $annonce){
+        $prepared = $this->connexion->prepare("DELETE FROM annonces WHERE id=:id");
+        $prepared->execute(array(
+            'id' => $annonce->getId()
+        ));
+    }
+
     public function getAnnonceById($id){
         $pdo = $this->connexion->prepare('SELECT * FROM annonces WHERE id=:id');
         $pdo->execute(array(
@@ -90,25 +132,20 @@ class BddManager {
         }
     }
 
-    public function postAnnonce(Annonce $annonce){
-        $query = "INSERT INTO annonces SET titre=:titre, description=:description, ville=:ville, tarif=:tarif, propriete=:propriete, superficie=:superficie, 
-        dispo_debut=:dispo_debut, dispo_fin=:dispo_fin, photo1=:photo1, photo2=:photo2, photo3=:photo3, datecreate=NOW(), user_id=:user_id";
-        $pdo = $this->connexion->prepare($query);
-        $pdo->execute(array(
-            'titre' => $annonce->getTitre(),
-            'description' => $annonce->getDescription(),
-            'ville' => $annonce->getVille(),
-            'tarif' => $annonce->getTarif(),
-            'propriete' => $annonce->getPropriete(),
-            'superficie' => $annonce->getSuperficie(),
-            'dispo_debut' => $annonce->getDispo_debut(),
-            'dispo_fin' => $annonce->getDispo_fin(),
-            'photo1' => $annonce->getPhoto1(),
-            'photo2' => $annonce->getPhoto2(),
-            'photo3' => $annonce->getPhoto3(),
-            'user_id' => $annonce->getUser_id()
+    public function getAnnoncesByLocataireId($locataire_id){
+        $object = $this->connexion->prepare('SELECT * FROM annonces WHERE locataire_id=:locataire_id');
+        $object->execute(array(
+            'locataire_id' => $locataire_id
         ));
-        return $pdo->rowCount();
+        $annonces = $object->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!empty($annonces)){
+            $tabAnnonces = [];
+            foreach($annonces as $data){
+                $tabAnnonces[] = new Annonce($data);
+            }
+            return $tabAnnonces;
+        }
     }
 
     public function postAvis(Avis $avis){
@@ -138,29 +175,6 @@ class BddManager {
         }
     }
 
-    public function modifyAnnonce(Annonce $annonce){
-        $prepared = $this->connexion->prepare("UPDATE annonces SET titre=:titre, description=:description, tarif=:tarif, dispo_debut=:dispo_debut, dispo_fin=:dispo_fin, photo1=:photo1, 
-        photo2=:photo2, photo3=:photo3 WHERE id=:id");
-        $prepared->execute(array(
-            'titre' => $annonce->getTitre(),
-            'description' => $annonce->getDescription(),
-            'tarif' => $annonce->getTarif(),
-            'dispo_debut' => $annonce->getDispo_debut(),
-            'dispo_fin' => $annonce->getDispo_fin(),
-            'photo1' => $annonce->getPhoto1(),
-            'photo2' => $annonce->getPhoto2(),
-            'photo3' => $annonce->getPhoto3(),
-            'id' => $annonce->getId()
-        ));
-    }
-
-    public function supprAnnonce(Annonce $annonce){
-        $prepared = $this->connexion->prepare("DELETE FROM annonces WHERE id=:id");
-        $prepared->execute(array(
-            'id' => $annonce->getId()
-        ));
-    }
-
     public function reservation(Annonce $annonce){
         $prepared = $this->connexion->prepare("UPDATE annonces SET statut=:statut, locataire_id=:locataire_id WHERE id=:id");
         $prepared->execute(array(
@@ -168,22 +182,6 @@ class BddManager {
             'locataire_id' => $annonce->getLocataire_id(),
             'id' => $annonce->getId()
         ));
-    }
-
-    public function getAnnoncesByLocataireId($locataire_id){
-        $object = $this->connexion->prepare('SELECT * FROM annonces WHERE locataire_id=:locataire_id');
-        $object->execute(array(
-            'locataire_id' => $locataire_id
-        ));
-        $annonces = $object->fetchAll(PDO::FETCH_ASSOC);
-
-        if(!empty($annonces)){
-            $tabAnnonces = [];
-            foreach($annonces as $data){
-                $tabAnnonces[] = new Annonce($data);
-            }
-            return $tabAnnonces;
-        }
     }
 
     public function ajoutFavori(Favori $favori){
