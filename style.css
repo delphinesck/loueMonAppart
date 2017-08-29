@@ -7,6 +7,22 @@ b {
 	font-family: 'Roboto-medium', sans-serif;
 }
 
+i {
+    font-family: 'Roboto-thin', sans-serif;
+}
+
+footer {
+    background-color: black;
+    width: 100%;
+    display: block;
+    margin-top: 70px;
+    color: white;
+    font-family: 'Roboto-thin', sans-serif;
+    text-align: center;
+    padding: 25px 0px 25px 0px;
+    font-size: 13px;
+}
+
 main {
     font-family: 'Roboto-light', sans-serif;
     width: 1050px;
@@ -15,23 +31,26 @@ main {
 
 nav {
     position: fixed;
-    background-color: white;
+    background-color: #E5E5E5;
     width: 100%;
     display: block;
     top: 0px;
     width: 100%;
     padding: 20px 0px 20px 0px;
+    border-top: 3px solid #ff7453;
 }
 
 #navigation {
     margin: auto;
     width: 1050px;
-    background-color: white;
+    background-color: #E5E5E5;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 #logo {
     display: inline-block;
-    padding-top: 10px;
 }
 
 .logostyle1 {
@@ -45,12 +64,28 @@ nav {
     font-size: 40px;
 }
 
+#slogan {
+    display: flex;
+    font-family: 'Roboto-thin', sans-serif;
+    margin-left: 30px;
+    font-size: 18px;
+    align-items: flex-end;
+}
+
 #menu {
-    display: inline-block;
-    padding-left: 50px;
+    display: flex;
+    margin-top: 49px;
+    width: 500px;
+    justify-content: flex-end;
 }
 
 .box_principale {
+    margin-top: 167px;
+}
+
+.box_log {
+    width: 500px;
+    margin: auto;
     margin-top: 150px;
 }
 
@@ -64,6 +99,7 @@ nav {
     background-color: #E5E5E5;
     width: 500px;
     margin-bottom: 50px;
+    border-bottom: 3px solid #ff7453;
 }
 
 .text_box {
@@ -73,8 +109,13 @@ nav {
 
 h2 {
     font-size: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-family: 'Roboto-regular', sans-serif;
+}
+
+h3 {
+    font-size: 30px;
+    padding: 0px 0px 15px 0px;
 }
 
 h4 {
@@ -83,19 +124,274 @@ h4 {
     font-size: 17px;
 }
 
+h5 {
+    font-family: 'Roboto-medium', sans-serif;
+    font-size: 18px;
+    display: block;
+    margin: 30px 0px 10px 0px;
+    color: #ff7453;
+}
+
+h6 {
+    font-family: 'Roboto-medium', sans-serif;
+    display: inline-block;
+}
+
+.toph5 {
+    margin: 10px 0px;
+}
+
+#descriannonce {
+    text-align: justify;
+}
+
+p {
+    line-height: 150%;
+    font-size: 18px;
+}
+
+#detailsannonce {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 70px;
+}
+
+.blocdetails {
+    width: 200px;
+}
+
 .creer_annonce {
     text-align: right;
     margin-bottom: 20px;
 }
 
-.listeavis_box {
-    background-color: yellow;
+.favori {
+    display: block;
+    float: left;
+    border: none;
+    background-color: white;
+    font-size: 40px;
+    color: #ff7453;
+    margin: 0px 25px 0px 25px;
+    padding: 10px 0px;
+}
+
+.titreannonce {
+    border-bottom: 3px solid #ff7453;
+    padding-bottom: 20px;
+    margin-left: 100px;
+}
+
+#avistitre {
+    border-top: 3px solid #ff7453;
+    margin: 40px 0px 10px 0px;
+    padding-top: 20px;
+}
+
+.avis_box {
+    background-color: #E5E5E5;
+    font-size: 17px;
+    padding: 20px;
+}
+
+.noteavis {
+    font-size: 20px;
+    color: #ff7453;
+    display: inline-block;
+    width: 120px;
+}
+
+.commavis {
+    line-height: 150%;
+    margin: 15px 0px;
+    text-align: justify;
+    font-size: 15px;
+}
+.dateavis {
+    text-align: right;
+    font-size: 13px;
 }
 
 .reserve {
-    color: red;
+    color: white;
+    background-color: red;
+    text-align: center;
+    display: block;
+    width: 250px;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .messageerreur {
     color: red;
+}
+
+label {
+    font-family: 'Roboto-medium', sans-serif;
+}
+
+.labelnomodify {
+    padding: 7px 0px 20px 0px;
+}
+
+.inputs {
+    margin: 7px 0px 20px 0px;
+    width: 100%;
+    display: block;
+    font-size: 15px;
+    border: 1px solid #E5E5E5;
+    padding: 5px;
+}
+
+select {
+    margin: 7px 0px 20px 0px;
+    width: 212px;
+    display: block;
+    font-size: 15px;
+    border: 1px solid #E5E5E5;
+    padding: 5px;
+    border-radius: 0px;
+}
+
+.descri {
+    margin: 7px 0px 20px 0px;
+    width: 100%;
+    height: 200px;
+    display: block;
+    font-size: 15px;
+    border: 1px solid #E5E5E5;
+    padding: 5px;
+}
+
+.date {
+    width: 200px;
+}
+
+.inputinline {
+    display: inline-block;
+    width: 200px;
+    margin-right: 10px;
+}
+
+.bouton1 {
+    width: 312px;
+    background-color: #ff7453;
+    border: none;
+    color: white;
+    margin: 7px 0px 20px 0px;
+    display: block;
+    font-size: 15px;
+    padding: 5px;
+}
+
+.bouton2 {
+    display: block;
+    margin: auto;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: #FF7352;
+    border: none;
+    color: white;
+    font-size: 20px;
+    width: 300px;
+}
+
+.bouton3 {
+    display: inline-block;
+    font-size: 13px;
+    margin: 0px 0px 0px 10px;
+    background-color: white;
+    border: none;
+    border-radius: 0px;
+    padding: 5px;
+    width: auto;
+}
+
+.bouton4 {
+    display: block;
+    background-color: #FF7352;
+    width: 150px;
+    font-size: 15px;
+    margin: auto;
+    margin-bottom: 60px;
+    border: none;
+    color: white;
+    padding: 10px;
+}
+
+.bouton5 {
+    margin-left: 10px;
+    background-color: #E5E5E5;
+    border: none;
+    font-size: 13px;
+    padding: 5px;
+    width: auto;
+}
+
+.bouton6 {
+    background-color: #E5E5E5;
+    border: none;
+    font-size: 13px;
+    padding: 5px;
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.boutons_profil {
+    display: flex;
+}
+
+.imageannonce {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.imageseule {
+    text-align: center;
+}
+
+.dateannonce {
+    display: block;
+    width: 100%;
+    margin: 10px 0px;
+    text-align: right;
+    margin-bottom: 30px;
+    font-size: 13px;
+}
+
+.modifsuppr {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.box_profil {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: #E5E5E5;
+    align-content: stretch;
+}
+
+.profil {
+    line-height: 150%;
+    margin-bottom: 50px;
+}
+
+.blocprofil {
+    display: block;
+    width: 460px;
+    min-height: 250px;
+    background-color: white;
+    margin: 20px 0px;
+    padding: 15px;
+    line-height: 150%;
 }

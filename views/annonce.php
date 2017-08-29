@@ -5,21 +5,15 @@
         <?php
             $bddmanager = new BddManager();
             $annonce = $bddmanager->getAnnonceById($id_annonce);
+            $user = $bddmanager->getUserById($annonce->getUser_id());
         ?>
 
-        <h3><?= $annonce->getTitre(); ?> <i>à</i> <?= $annonce->getVille(); ?></h3>
-
         <?php
-        $bddmanager = new BddManager();
-        $user = $bddmanager->getUserById($annonce->getUser_id());
-        ?>
+            if(empty($_SESSION)){
+                echo "<input type='submit' value='☆' class='favori' />";
+            }
 
-        Proposé par <?= $user->getUsername(); ?>
-
-        <br /><br />
-
-        <?php
-            if(!empty($_SESSION)){
+            else{
                 $favoris = $bddmanager->getFavorisByUserId($_SESSION['user']['id']);
                 $is_favoris = false;
 
@@ -33,62 +27,139 @@
                     if($is_favoris == true){
                         echo "<form action='/WWW/TP_loueMonAppart/supprFavoriService/" . $id_annonce . "' method='post'>
                         <input type='hidden' value='" . $annonce->getId() . "' name='annonce_id'>
-                        <input type='submit' value='★' />
+                        <input type='submit' value='★' class='favori' />
                         </form>";
                     }
 
                     else{
                         echo "<form action='/WWW/TP_loueMonAppart/newFavoriService/" . $id_annonce . "' method='post'>
                         <input type='hidden' value='" . $annonce->getId() . "' name='annonce_id'>
-                        <input type='submit' value='☆' />
+                        <input type='submit' value='☆' class='favori' />
                         </form>";
                     }
                 }
-            }
-        ?>
 
-        <br />
-
-        <p>
-            <b>Description : </b><br />
-            <?= $annonce->getDescription(); ?>
-        </p>
-        <b>Ville : </b><?= $annonce->getVille(); ?><br />
-        <b>Tarif : </b><?= $annonce->getTarif(); ?>€ /jour<br />
-        <b>Type de propriété : </b><?= $annonce->getPropriete(); ?><br />
-        <b>Superficie : </b><?= $annonce->getSuperficie(); ?>m<sup>2</sup><br />
-        <b>Début de disponibilité : </b><?= $annonce->getDispo_debut(); ?><br />
-        <b>Fin de disponiblité : </b><?= $annonce->getDispo_fin(); ?><br />
-        <?php
-            if(!empty($annonce->getPhoto1())){
-                echo "<b>Photos : </b><br />
-                <img src='" . $annonce->getPhoto1() . "'><br />";
-            }
-        ?>
-
-        <?php
-            if(!empty($annonce->getPhoto2())){
-                echo "<img src='" . $annonce->getPhoto2() . "'><br />";
-            }
-        ?>
-
-        <?php
-            if(!empty($annonce->getPhoto3())){
-                echo "<img src='" . $annonce->getPhoto3() . "'><br />";
-            }
-        ?>
-        <br />
-
-        <?= "Posté le " . $annonce->getDatecreate() ?><br />
-
-        <?php
-            if(!empty($_SESSION)){
-                if($_SESSION['user']['id'] == $user->getId()){
-                    echo "<a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button>Modifier</button></a>
-                    <form action='/WWW/TP_loueMonAppart/supprAnnonceService/" . $annonce->getId() . "' method='post'>
-                        <input type='submit' value='Supprimer' />
-                    </form>";
+                else{
+                    echo "<input type='submit' value='☆' class='favori' />";
                 }
+            }
+        ?>
+        <div class="titreannonce">
+            <h2><?= $annonce->getTitre(); ?> <i>à</i> <?= $annonce->getVille(); ?></h2>
+
+            Proposé par <?= $user->getUsername(); ?>
+        </div>
+
+        <div class="dateannonce">
+            <?= "Publié le " . $annonce->getDatecreate() ?>
+        </div>
+
+        <div class="modifsuppr">
+            <?php
+                if(!empty($_SESSION)){
+                    if($_SESSION['user']['id'] == $user->getId()){
+                        echo "<a href='/WWW/TP_loueMonAppart/modifier_annonce/" . $annonce->getId() . "'><button class='bouton5'>Modifier</button></a>
+                        <form action='/WWW/TP_loueMonAppart/supprAnnonceService/" . $annonce->getId() . "' method='post'>
+                            <input type='submit' value='Supprimer' class='bouton5' />
+                        </form>";
+                    }
+                }
+            ?>
+        </div>
+
+        <?php
+            if($annonce->getStatut() == true){ ?>
+                <div class="reserve">Ce logement est déjà réservé !</div>
+        <?php
+            } 
+        ?>
+
+        <?php
+            if(!empty($annonce->getPhoto1()) && empty($annonce->getPhoto2()) && empty($annonce->getPhoto3())){
+                echo "<div class='imageseule'>
+                    <img src='" . $annonce->getPhoto1() . "' style='height: 450px; width: 700px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(empty($annonce->getPhoto1()) && !empty($annonce->getPhoto2()) && empty($annonce->getPhoto3())){
+                echo "<div class='imageseule'>
+                    <img src='" . $annonce->getPhoto2() . "' style='height: 450px; width: 700px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(empty($annonce->getPhoto1()) && empty($annonce->getPhoto2()) && !empty($annonce->getPhoto3())){
+                echo "<div class='imageseule'>
+                    <img src='" . $annonce->getPhoto3() . "' style='height: 450px; width: 700px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(!empty($annonce->getPhoto1()) && !empty($annonce->getPhoto2()) && empty($annonce->getPhoto3())){
+                echo "<div class='imageannonce'>
+                    <img src='" . $annonce->getPhoto1() . "' style='height: 350px; width: 500px;'>
+                    <img src='" . $annonce->getPhoto2() . "' style='height: 350px; width: 500px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(!empty($annonce->getPhoto1()) && !empty($annonce->getPhoto2()) && !empty($annonce->getPhoto3())){
+                echo "<div class='imageseule'>
+                    <img src='" . $annonce->getPhoto1() . "' style='height: 450px; width: 700px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(empty($annonce->getPhoto1()) && !empty($annonce->getPhoto2()) && !empty($annonce->getPhoto3())){
+                echo "<div class='imageannonce'>
+                    <img src='" . $annonce->getPhoto2() . "' style='height: 350px; width: 500px;'>
+                    <img src='" . $annonce->getPhoto3() . "' style='height: 350px; width: 500px;'>
+                </div><br />";
+            }
+        ?>
+
+        <?php
+            if(!empty($annonce->getPhoto1()) && empty($annonce->getPhoto2()) && !empty($annonce->getPhoto3())){
+                echo "<div class='imageannonce'>
+                    <img src='" . $annonce->getPhoto1() . "' style='height: 350px; width: 500px;'>
+                    <img src='" . $annonce->getPhoto3() . "' style='height: 350px; width: 500px;'>
+                </div><br />";
+            }
+        ?>
+
+        <br />
+        <div id="descriannonce">
+            <h5 class="toph5">Description de la location</h5>
+            <p><?= $annonce->getDescription(); ?></p>
+        </div>
+
+        <div id="detailsannonce">
+            <div class="blocdetails">
+                <h5>Ville </h5><?= $annonce->getVille(); ?>
+                <h5>Tarif </h5><?= $annonce->getTarif(); ?>€ /jour
+            </div>
+            <div class="blocdetails">
+                <h5>Type de propriété </h5><?= $annonce->getPropriete(); ?>
+                <h5>Superficie </h5><?= $annonce->getSuperficie(); ?>m²
+            </div>
+            <div class="blocdetails">
+                <h5>Début de disponibilité </h5><?= $annonce->getDispo_debut(); ?>
+                <h5>Fin de disponiblité </h5><?= $annonce->getDispo_fin(); ?>
+            </div>
+        </div>
+
+        <?php
+            if(!empty($annonce->getPhoto1()) && !empty($annonce->getPhoto2()) && !empty($annonce->getPhoto3())){
+                echo "<div class='imageannonce'>
+                    <img src='" . $annonce->getPhoto2() . "' style='height: 350px; width: 500px;'>
+                    <img src='" . $annonce->getPhoto3() . "' style='height: 350px; width: 500px;'>
+                </div><br />";
             }
         ?>
 
@@ -100,37 +171,29 @@
             elseif(!empty($_SESSION['user']) && $_SESSION['user']['id'] != $user->getId()){
                 if($annonce->getStatut() == false){
                     echo "<form action='/WWW/TP_loueMonAppart/reservationService/" . $id_annonce . "' method='post'>
-                    <input type='submit' value='Réserver ce logement' />
+                    <input type='submit' value='Réserver ce logement' class='bouton2' />
                     </form>";
-                }
-
-                else{ ?>
-                    <div class="reserve">Ce logement est déjà réservé.</div>
-        <?php
                 }
             }
         ?>
 
-        <hr>
 
-        <h3>Avis</h3>
+        <h3 id="avistitre">Avis</h3>
         <?php 
             if(empty($_SESSION)){
-                echo "Vous devez être connecté pour donner votre avis.";
             }
 
             elseif($_SESSION['user']['id'] == $annonce->getUser_id()){
-                echo "Vous ne pouvez pas donner d'avis sur votre propre location.";
+                /*echo "Vous ne pouvez pas donner d'avis sur votre propre location.<br /><br />";*/
             }
 
             elseif($_SESSION['user']['id'] != $annonce->getLocataire_id()){
-                echo "Vous ne pouvez pas donner d'avis sur une location que vous n'avez pas louée.";
+                /*echo "Vous ne pouvez pas donner d'avis sur une location que vous n'avez pas louée.";*/
             }
 
             else{
 
             echo "<form action='/WWW/TP_loueMonAppart/newAvisService/" . $id_annonce . "' method='post'>
-                Donnez votre avis sur cette location !<br />
                 <label>Notez votre séjour</label>
                 <select name='note'>
                     <option value='★☆☆☆☆'>★☆☆☆☆</option>
@@ -138,16 +201,14 @@
                     <option value='★★★☆☆'>★★★☆☆</option>
                     <option value='★★★★☆'>★★★★☆</option>
                     <option value='★★★★★'>★★★★★</option>
-                </select><br />
+                </select>
                 <input type='hidden' value='" . $annonce->getId() . "' name='annonce_id'>
-                <textarea name='commentaire' cols='80' rows='6' placeholder='Décrivez votre expérience ici...'></textarea><br />
-                <input type='submit' value='Valider' />
+                <textarea name='commentaire' class='descri' placeholder='Décrivez votre expérience ici...'></textarea><br />
+                <input type='submit' value='Valider' class='bouton4' />
             </form>";
             }
 
         ?>
-
-        <br /><br />
 
         <?php
             $bddmanager = new BddManager();
@@ -159,13 +220,14 @@
 
             else{
                 foreach($allAvis as $avis){
-                    echo "<div class='listeavis_box'>
-                    <h4>";
-                    $user = $bddmanager->getUserById($avis["user_id"]);
-                    echo $user->getUsername() . $avis["note"] . "</h4>
-                    <p>" . $avis["commentaire"] . "</p>
-                    Posté le " . $avis["datecreate"] .
-                    "</div><br />";
+                    echo "<div class='avis_box'>";
+                        $user = $bddmanager->getUserById($avis["user_id"]);
+                        echo "<div class='noteavis'>" . $avis["note"] . "</div>
+                        <h6>" . $user->getUsername() . "</h6>
+                        <div class='commavis'>" . $avis["commentaire"] . "</div>
+                        <div class='dateavis'> Posté le " . $avis["datecreate"] .
+                        "</div>
+                    </div><br />";
                 }
             }
         ?>

@@ -19,23 +19,23 @@
     <div id="navigation">
         <div id="logo"><a href="/WWW/TP_loueMonAppart/accueil"><h1><span class="logostyle1">LoueMon</span><br /><span class="logostyle2">Appart</span></h1></a></div>
 
-        <div id="menu">
-            <ul>
-                <?php 
-                    if(!empty($_SESSION)){
-                        echo "<li><a href='/WWW/TP_loueMonAppart/profil'>Profil</a></li>
-                        <li><a href='/WWW/TP_loueMonAppart/nouvelle_annonce'><button>Créer une annonce</button></a></li>
-                        <form action='/WWW/TP_loueMonAppart/deconnecterService' method='post'>
-                            <input type='submit' value='Se déconnecter' />
-                        </form>";
-                    }
+        <div id="slogan">Location de courte durée entre particuliers</div>
 
-                    else{
-                        echo "<li><a href='/WWW/TP_loueMonAppart/login'>Se connecter</a></li>
-                        <li><a href='/WWW/TP_loueMonAppart/register'>S'inscrire</a></li>";
-                    }
-                ?>
-            </ul>
+        <div id="menu">
+            <?php 
+                if(!empty($_SESSION)){
+                    echo "<button class='bouton3'><a href='/WWW/TP_loueMonAppart/profil'>Profil</a></button>
+                    <button class='bouton3'><a href='/WWW/TP_loueMonAppart/nouvelle_annonce'>Créer une annonce</a></button>
+                    <form action='/WWW/TP_loueMonAppart/deconnecterService' method='post' style='display:inline-block;'>
+                        <input type='submit' value='Se déconnecter' class='bouton3' />
+                    </form>";
+                }
+
+                else{
+                    echo "<button class='bouton3'><a href='/WWW/TP_loueMonAppart/login'>Se connecter</a></button>
+                    <button class='bouton3'><a href='/WWW/TP_loueMonAppart/register'>S'inscrire</a></button>";
+                }
+            ?>
         </div>
     </div>
 </nav>

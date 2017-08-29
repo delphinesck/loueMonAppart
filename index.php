@@ -16,10 +16,6 @@ Flight::route('/accueil', function(){
     Flight::redirect('/');
 });
 
-Flight::route('/annonces', function(){
-    Flight::render('annonces');
-});
-
 Flight::route('/annonce/@id', function($id){
     Flight::render('annonce', array("id_annonce" => $id));
 });
@@ -35,10 +31,6 @@ Flight::route('/nouvelle_annonce', function(){
 
 Flight::route('/profil', function(){
     Flight::render('profil');
-});
-
-Flight::route('/messagerie', function(){
-    Flight::render('messagerie');
 });
 
 Flight::route('/login', function(){
@@ -60,7 +52,7 @@ Flight::route('/registerService', function(){
 
 Flight::route('/newAnnonceService', function(){
     include "service/newAnnonceService.php";
-    Flight::redirect('/annonces');
+    Flight::redirect('/accueil');
 });
 
 Flight::route('/newAvisService/@id', function($id){

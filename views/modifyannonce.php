@@ -1,42 +1,48 @@
 <?php echo $header ?>
 
-<?php 
-    $bddmanager = new BddManager();
-    $annonce = $bddmanager->getAnnonceById($id_annonce);
-    $user = $bddmanager->getUserById($annonce->getUser_id());
+<main>
+    <div class="box_principale">
+        <?php 
+            $bddmanager = new BddManager();
+            $annonce = $bddmanager->getAnnonceById($id_annonce);
+            $user = $bddmanager->getUserById($annonce->getUser_id());
 
-    if($_SESSION['user']['id'] == $user->getId()){
-        echo "<h2>Modifier votre annonce</h2>
-            <form action='/WWW/TP_loueMonAppart/modifyAnnonceService/".$id_annonce."' method='post'>
-            <label>Titre : </label>
-            <input type='text' name='titre' value='" . $annonce->getTitre() . "'/><br />
-            <label>Description : </label><br />
-            <textarea placeholder='Décrivez votre location ici...' name='description' rows='5' cols='60'>" . $annonce->getDescription() . "</textarea><br />
-            <label>Ville : </label> " . $annonce->getVille() . "<br />
-            <label>Tarif : </label>
-            <input type='number' name='tarif' value='" . $annonce->getTarif() . "' /> € /jour<br />
-            <label>Type de propriété : </label> " . $annonce->getPropriete() . "<br />
-            <label>Superficie : </label> " . $annonce->getSuperficie() . " m<sup>2</sup><br />
-            <label>Début de disponibilité : </label>
-            <input type='date' name='dispo_debut' value='" . $annonce->getDispo_debut() . "' /><br />
-            <label>Fin de disponibilité : </label>
-            <input type='date' name='dispo_fin' value='" . $annonce->getDispo_fin() . "' /><br />
+            if($_SESSION['user']['id'] == $user->getId()){
+                echo "<h2>Modifier votre annonce</h2>
+                    <form action='/WWW/TP_loueMonAppart/modifyAnnonceService/".$id_annonce."' method='post'>
+                    <label>Titre</label>
+                    <input type='text' name='titre' value='" . $annonce->getTitre() . "' class='inputs' />
+                    <label>Description</label>
+                    <textarea placeholder='Décrivez votre location ici...' name='description' class='descri' >" . $annonce->getDescription() . "</textarea>
+                    <div class='labelnomodify'><label>Ville : </label> " . $annonce->getVille() . "</div>
+                    <label>Tarif</label><br />
+                    <input type='number' name='tarif' value='" . $annonce->getTarif() . "' class='inputs inputinline' /> € /jour
+                    <div class='labelnomodify'><label>Type de propriété : </label> " . $annonce->getPropriete() . "</div>
+                    <div class='labelnomodify'><label>Superficie : </label> " . $annonce->getSuperficie() . " m²</div>
+                    <label>Début de disponibilité</label>
+                    <input type='date' name='dispo_debut' value='" . $annonce->getDispo_debut() . "' class='inputs date' />
+                    <label>Fin de disponibilité</label>
+                    <input type='date' name='dispo_fin' value='" . $annonce->getDispo_fin() . "' class='inputs date' />
 
-            <h4>Photos</h4>
-            <label>Photo 1 : </label>
-            <input type='text' name='photo1' value='" . $annonce->getPhoto1() . "' /><br />
-            <label>Photo 2 : </label>
-            <input type='text' name='photo2' value='" . $annonce->getPhoto2() . "' /><br />
-            <label>Photo 3 : </label>
-            <input type='text' name='photo3' value='" . $annonce->getPhoto3() . "' /><br /><br />
+                    <br /><br />
 
-            <input type='submit' value='Modifier' />
-        </form>";
-    }
+                    <h3>Photos</h3>
+                    <label>Photo 1</label>
+                    <input type='text' name='photo1' value='" . $annonce->getPhoto1() . "' class='inputs' />
+                    <label>Photo 2</label>
+                    <input type='text' name='photo2' value='" . $annonce->getPhoto2() . "' class='inputs' />
+                    <label>Photo 3</label>
+                    <input type='text' name='photo3' value='" . $annonce->getPhoto3() . "' class='inputs' />
 
-    else{
-        echo "Vous ne disposez pas des droits pour modifier cette annonce.";    
-    }
-?>
+                    <input type='submit' value='Modifier' class='bouton2' />
+                </form>";
+            }
+
+            else{
+                echo "Vous ne disposez pas des droits pour modifier cette annonce.";    
+            }
+        ?>
+    </div>
+</main>
 
 <?php echo $footer ?>
